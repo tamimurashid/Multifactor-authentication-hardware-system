@@ -16,7 +16,7 @@ Enroll enroll(finger);
 Delete del(finger);
 
 // Function prototype
-uint8_t readNumber();
+String readCommand();
 
 void setup() {
     Serial.begin(9600);
@@ -34,41 +34,49 @@ void setup() {
 }
 
 void loop() {
-    Serial.println("Select an option:");
-    Serial.println("1. Enroll new fingerprint");
-    Serial.println("2. Authenticate fingerprint");
-    Serial.println("3. Delete fingerprint");
-    Serial.println("4. Exit");
+    Serial.println("Waiting for command...");
+    String command = readCommand();
 
-    uint8_t option = readNumber();
-    switch (option) {
-        case 1:
-            enroll.enrollFingerprint();
-            break;
-        case 2:
+    if (command == "ENROLL" || command == "enroll" || command == "2") {
+        Serial.println("Starting enrollment...");
+        enroll.enrollFingerprint();
+    } else if (command == "AUTH" || command == "A" || command == "a" || command == "1") {
+        Serial.println("Entering continuous authentication mode.");
+        while (true) {
             auth.authenticateFingerprint();
-            break;
-        case 3:
-            del.deleteFingerprint();
-            break;
-        case 4:
-            Serial.println("Exiting...");
-            while (1); // Halt the program
-            break;
-        default:
-            Serial.println("Invalid option, please try again.");
-            break;
+
+            // Check for 'S' command to stop authentication mode
+            if (Serial.available() > 0) {
+                String stopCommand = readCommand();
+                if (stopCommand == "S" || stopCommand == "s" || stopCommand == "0") {
+                    Serial.println("Exiting authentication mode.");
+                    break;
+                }
+            }
+            delay(100); // Add a slight delay to prevent rapid looping
+        }
+    } else if (command == "DELETE" || command == "delete" || command == "4") {
+        Serial.println("Starting deletion...");
+        del.deleteFingerprint();
+    } else if (command == "EXIT") {
+        Serial.println("Exiting...");
+        while (1); // Halt the program
+    } else {
+        Serial.println("Invalid command, please try again.");
     }
 
-    delay(1000); // Delay before showing the menu again
+    delay(1000); // Delay before processing the next command
 }
 
 // Function definition
-uint8_t readNumber() {
-    uint8_t num = 0;
-    while (num == 0) {
-        while (!Serial.available());
-        num = Serial.parseInt();
+String readCommand() {
+    String command = "";
+    while (command.length() == 0) {
+        if (Serial.available() > 0) {
+            command = Serial.readStringUntil('\n');
+            command.trim(); // Remove any whitespace or newline characters
+            Serial.flush(); // Flush the serial buffer to clear any additional data
+        }
     }
-    return num;
+    return command;
 }

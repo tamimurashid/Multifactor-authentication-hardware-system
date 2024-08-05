@@ -1,25 +1,35 @@
 #include "Enroll.h"
 #include <Arduino.h>
 
-Enroll::Enroll(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor), id(0) {}
+#define MAX_ID 127 // Define the maximum ID value
 
-uint8_t Enroll::readNumber() {
-    uint8_t num = 0;
-    while (num == 0) {
-        while (!Serial.available());
-        num = Serial.parseInt();
+Enroll::Enroll(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor), id(0) {
+    // Initialize the used IDs array
+    for (int i = 0; i < MAX_ID; i++) {
+        usedIDs[i] = false;
     }
-    return num;
+}
+
+uint8_t Enroll::generateUniqueID() {
+    uint8_t newID;
+    bool idFound = false;
+
+    // Try to generate a unique ID
+    while (!idFound) {
+        newID = random(1, MAX_ID + 1);
+        if (!usedIDs[newID - 1]) {
+            usedIDs[newID - 1] = true; // Mark this ID as used
+            idFound = true;
+        }
+    }
+
+    return newID;
 }
 
 uint8_t Enroll::enrollFingerprint() {
     Serial.println("Ready to enroll a fingerprint!");
-    Serial.println("Please type in the ID # (from 1 to 127) you want to save this finger as...");
-    id = readNumber();
-    if (id == 0) {
-        return 0; // ID #0 not allowed, try again!
-    }
-    Serial.print("Enrolling ID #");
+    id = generateUniqueID();
+    Serial.print("Generated unique ID: ");
     Serial.println(id);
 
     while (!getFingerprintEnroll());
