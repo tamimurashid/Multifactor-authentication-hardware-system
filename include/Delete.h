@@ -6,10 +6,11 @@
 class Delete {
 public:
     Delete(Adafruit_Fingerprint &fingerprintSensor);
-    void deleteFingerprint();
+    void deleteFingerprint();  // Function to delete a fingerprint by ID
+
 private:
     Adafruit_Fingerprint &finger;
-    uint8_t readNumber();
+    uint8_t readNumber();  // Function to read and validate a number input from the user
 };
 
 #endif

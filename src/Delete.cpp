@@ -8,6 +8,10 @@ uint8_t Delete::readNumber() {
     while (num == 0) {
         while (!Serial.available());
         num = Serial.parseInt();
+        if (num < 1 || num > 127) {
+            Serial.println("Invalid ID. Please enter a number between 1 and 127.");
+            num = 0; // Reset to 0 to prompt re-entry
+        }
     }
     return num;
 }
@@ -33,6 +37,7 @@ void Delete::deleteFingerprint() {
     } else if (p == FINGERPRINT_FLASHERR) {
         Serial.println("Error writing to flash");
     } else {
-        Serial.print("Unknown error: 0x"); Serial.println(p, HEX);
+        Serial.print("Unknown error: 0x"); 
+        Serial.println(p, HEX);
     }
 }
