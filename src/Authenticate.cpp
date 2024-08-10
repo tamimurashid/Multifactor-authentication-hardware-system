@@ -1,6 +1,15 @@
 #include "Authenticate.h"
 #include <Arduino.h>
+#include "Indicator.h"
+#include "ServoControl.h"
+const int servoPin = 9;
+const int ledPin1 = 13; 
+const int ledPin2 = 12; // Example LED pin
+const unsigned long warningDelay = 500;  // 500ms delay for warning
+const unsigned long successDelay = 200; 
 
+Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
+ServoControl servoControl(servoPin);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
 
 uint8_t Authenticate::getFingerprintID() {
@@ -12,18 +21,22 @@ uint8_t Authenticate::getFingerprintID() {
             break;
         case FINGERPRINT_NOFINGER:
             Serial.println("No finger detected");
+            indicator.error();
             delay(1000);
             return p;
         case FINGERPRINT_PACKETRECIEVEERR:
             Serial.println("Communication error");
+            indicator.error();
             delay(1000);
             return p;
         case FINGERPRINT_IMAGEFAIL:
             Serial.println("Imaging error");
+            indicator.error();
             delay(1000);
             return p;
         default:
             Serial.println("Unknown error");
+            indicator.error();
             delay(1000);
             return p;
     }
@@ -40,10 +53,12 @@ uint8_t Authenticate::getFingerprintID() {
             return p;
         case FINGERPRINT_PACKETRECIEVEERR:
             Serial.println("Communication error");
+            indicator.error();
             delay(1000);
             return p;
         case FINGERPRINT_FEATUREFAIL:
             Serial.println("Could not find fingerprint features");
+            indicator.error();
             delay(1000);
             return p;
         case FINGERPRINT_INVALIDIMAGE:
@@ -61,7 +76,10 @@ uint8_t Authenticate::getFingerprintID() {
         Serial.println("Found a print match!");
         Serial.print("Found ID #"); Serial.print(finger.fingerID);
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
+        indicator.success();
+        servoControl.rotateOnSuccess();
         return finger.fingerID;
+      
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
         return p;

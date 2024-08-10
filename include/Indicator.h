@@ -1,17 +1,19 @@
 #ifndef INDICATOR_H
 #define INDICATOR_H
 
+#include <Arduino.h>
+
 class Indicator {
-    public:
-    int success();
-    int error();
-    int Delay_warning = 100;  
-    int Delay_success = 1000;
-    int warning_led = 13;
-    int success_led = 12;
+public:
+    Indicator(int ledPin1, int ledpin2, unsigned long delayWarning, unsigned long delaySuccess);
+    void error();
+    void success();
 
+private:
+    int warning_led;
+    int success_led;
+    unsigned long Delay_warning;
+    unsigned long Delay_success;
 };
-
-
 
 #endif
