@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include "Indicator.h"
 #include "ServoControl.h"
-const int servoPin = 3;
+const int servoPin = 16;
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
 const unsigned long warningDelay = 1000;  
@@ -75,7 +75,7 @@ uint8_t Authenticate::getFingerprintID() {
         Serial.print("Found ID #"); Serial.print(finger.fingerID);
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
         indicator.success();
-        servoControl.rotateOnSuccess();
+        //servoControl.rotateOnSuccess();
         return finger.fingerID;
       
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
