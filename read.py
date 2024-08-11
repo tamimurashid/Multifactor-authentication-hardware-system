@@ -1,8 +1,6 @@
 import json
 import os
-from gtts import gTTS
-from pydub import AudioSegment
-from pydub.playback import play
+import pyttsx3
 import time
 
 # Path to the JSON file
@@ -18,24 +16,14 @@ def read_from_json():
     except json.JSONDecodeError:
         return None
 
-def provide_feedback(message, speed=1.5):
+def provide_feedback(message, speed=150):
     try:
-        tts = gTTS(text=message, lang='en')
-        tts.save("temp.mp3")
-
-        # Load the MP3 file and change the playback speed
-        audio = AudioSegment.from_mp3("temp.mp3")
-        new_sample_rate = int(audio.frame_rate * speed)
-        speed_changed_audio = audio._spawn(audio.raw_data, overrides={'frame_rate': new_sample_rate})
-        speed_changed_audio = speed_changed_audio.set_frame_rate(audio.frame_rate)
-
-        # Save the modified audio
-        speed_changed_audio.export("temp_speed.mp3", format="mp3")
-
-        # Play the modified audio
-        play(AudioSegment.from_mp3("temp_speed.mp3"))
+        engine = pyttsx3.init()
+        engine.setProperty('rate', speed)  # Set the speed of the speech
+        engine.say(message)
+        engine.runAndWait()
     except Exception as e:
-        print(f"Error using gTTS: {e}")
+        print(f"Error using pyttsx3: {e}")
 
 def main():
     while True:
