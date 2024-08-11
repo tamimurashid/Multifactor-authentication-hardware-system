@@ -2,11 +2,11 @@
 #include <Arduino.h>
 #include "Indicator.h"
 #include "ServoControl.h"
-const int servoPin = 9;
-const int ledPin1 = 13; 
-const int ledPin2 = 12; // Example LED pin
-const unsigned long warningDelay = 500;  // 500ms delay for warning
-const unsigned long successDelay = 200; 
+const int servoPin = 3;
+const int ledPin1 = 5; 
+const int ledPin2 = 4; 
+const unsigned long warningDelay = 1000;  
+const unsigned long successDelay = 1000; 
 
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 ServoControl servoControl(servoPin);
@@ -17,12 +17,10 @@ uint8_t Authenticate::getFingerprintID() {
     switch (p) {
         case FINGERPRINT_OK:
             Serial.println("Image taken");
-            delay(1000);
+            //delay(1000);
             break;
         case FINGERPRINT_NOFINGER:
             Serial.println("No finger detected");
-            indicator.error();
-            delay(1000);
             return p;
         case FINGERPRINT_PACKETRECIEVEERR:
             Serial.println("Communication error");
@@ -45,7 +43,7 @@ uint8_t Authenticate::getFingerprintID() {
     switch (p) {
         case FINGERPRINT_OK:
             Serial.println("Image converted");
-            delay(1000);
+            //delay(1000);
             break;
         case FINGERPRINT_IMAGEMESS:
             Serial.println("Image too messy");
@@ -82,9 +80,11 @@ uint8_t Authenticate::getFingerprintID() {
       
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
+         indicator.error();
         return p;
     } else if (p == FINGERPRINT_NOTFOUND) {
         Serial.println("Did not find a match");
+         indicator.error();
         return p;
     } else {
         Serial.println("Unknown error");
