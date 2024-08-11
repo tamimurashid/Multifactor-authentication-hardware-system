@@ -1,6 +1,5 @@
 import json
-import os
-import pyttsx3
+import subprocess
 import time
 
 # Path to the JSON file
@@ -18,12 +17,11 @@ def read_from_json():
 
 def provide_feedback(message, speed=150):
     try:
-        engine = pyttsx3.init()
-        engine.setProperty('rate', speed)  # Set the speed of the speech
-        engine.say(message)
-        engine.runAndWait()
+        # Adjust speed; 'say' uses WPM (words per minute) for speed
+        say_speed = max(50, min(500, speed))  # Ensure speed is within a reasonable range
+        subprocess.run(['say', '-r', str(say_speed), message])
     except Exception as e:
-        print(f"Error using pyttsx3: {e}")
+        print(f"Error using say command: {e}")
 
 def main():
     while True:
@@ -36,8 +34,8 @@ def main():
                 provide_feedback("Authentication successful")
             elif 'Did not find a match' in data:
                 provide_feedback("Authentication failed")
-            else:
-                provide_feedback("Unknown result")
+            # else:
+            #     provide_feedback("Unknown result")
             
         time.sleep(5)  # Delay before checking the JSON file again
 

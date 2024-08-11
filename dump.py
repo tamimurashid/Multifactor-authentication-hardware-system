@@ -4,7 +4,7 @@ import time
 import os
 
 # Configure serial connection
-ser = serial.Serial('/dev/tty.usbmodem14101', 9600)  # Replace with the correct port for your setup
+ser = serial.Serial('/dev/tty.usbserial-0001', 9600)  # Replace with the correct port for your setup
 ser.timeout = 1  # Set timeout to 1 second
 
 # Path to the JSON file
