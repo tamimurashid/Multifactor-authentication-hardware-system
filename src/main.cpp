@@ -1,3 +1,7 @@
+/*
+  This is the main file which execute to the micocontroller board 
+
+*/
 #include <Adafruit_Fingerprint.h>
 #include "Authenticate.h"
 #include "Enroll.h"
