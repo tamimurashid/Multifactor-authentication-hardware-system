@@ -1,7 +1,10 @@
 /*
   This is the main file which execute to the micocontroller board 
+  Created by talian robotics 
 
 */
+
+/* This below are header files for the project */
 #include <Adafruit_Fingerprint.h>
 #include "Authenticate.h"
 #include "Enroll.h"
@@ -16,6 +19,7 @@ SoftwareSerial mySerial(13, 15);// for esp8266 this is pin no 8 and 7
 #define mySerial Serial1
 #endif
 
+/* Object creation or decralation frommthe class found in the provided header files */
 Adafruit_Fingerprint finger(&mySerial);
 Authenticate auth(finger);
 Enroll enroll(finger);
