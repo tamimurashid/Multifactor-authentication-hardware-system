@@ -6,7 +6,7 @@
 
 #if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(13, 15);// for esp8266
+SoftwareSerial mySerial(13, 15);// for esp8266 this is pin no 8 and 7
 // SoftwareSerial mySerial(2, 3); // for arduino board
 #else
 #define mySerial Serial1
