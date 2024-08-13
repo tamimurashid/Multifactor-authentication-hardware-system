@@ -65,12 +65,12 @@ void loop() {
         del.deleteFingerprint();
     } else if (command == "EXIT") {
         Serial.println("Exiting...");
-        while (1); // Halt the program
+        while (1);
     } else {
         Serial.println("Invalid command, please try again.");
     }
 
-    delay(1000); // Delay before processing the next command
+    delay(1000); 
 }
 
 // Function definition
