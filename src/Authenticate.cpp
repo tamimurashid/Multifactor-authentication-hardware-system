@@ -33,7 +33,7 @@ const unsigned long SoundDelay = 100;
 /* End of other varible declaration */
 
 /* Class declaration or creation */
-AlertSound alertsound(int buzzle_pin, unsigned long SoundDelay);
+AlertSound alertsound(buzzle_pin, SoundDelay);
 Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
@@ -104,6 +104,7 @@ uint8_t Authenticate::getFingerprintID() {
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
         indicator.success();// this will light the green led to show succsses 
         //servoControl.rotateOnSuccess();
+        alertsound.Success_alert();
         lock.Open();// this will trigger the solenoid lock to open and remain open for five minutes 
         return finger.fingerID;// return the finger print id after being recorginised 
       
