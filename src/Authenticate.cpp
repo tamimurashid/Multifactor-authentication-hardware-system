@@ -8,7 +8,6 @@
 #include "Authenticate.h"
 #include <Arduino.h>
 #include "Indicator.h"
-#include "ServoControl.h"
 #include "Lock.h"
 /* End of header declaration */
 
@@ -19,8 +18,7 @@
    So in assigning pins makes sure to find the ESP8266 image to compare labeled pins and actual 
    function pins in the board 
 */
-const int trigger = 12; 
-const int servoPin = 16;
+const int trigger = 16; 
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
 /* End of varibale declaration */
@@ -34,7 +32,6 @@ const unsigned long  backresponse = 5000; // this is the delay for returning bac
 /* Class declaration or creation */
 Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
-ServoControl servoControl(servoPin);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
 /*End of class declaration */
 
