@@ -13,7 +13,13 @@
 /* End of header declaration */
 
 /* Start of global constant variables pin for board and sensor connecion*/
-const int trigger = 12;
+/* 
+   A short notice to follow, The board used here is Esp8266
+   It used GPIO pins as ESP32 or Rasberrypie board is quite different from arduino
+   So in assigning pins makes sure to find the ESP8266 image to compare labeled pins and actual 
+   function pins in the board 
+*/
+const int trigger = 12; 
 const int servoPin = 16;
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
