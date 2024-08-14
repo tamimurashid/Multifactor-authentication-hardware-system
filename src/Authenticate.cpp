@@ -2,12 +2,16 @@
 #include <Arduino.h>
 #include "Indicator.h"
 #include "ServoControl.h"
+#include "Lock.h"
+const int trigger = 12;
 const int servoPin = 16;
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
 const unsigned long warningDelay = 1000;  
 const unsigned long successDelay = 1000; 
+const unsigned long  backresponse = 5000; // this is the delay for returning back the lock after being triggered 
 
+Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 ServoControl servoControl(servoPin);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}

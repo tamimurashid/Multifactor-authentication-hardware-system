@@ -10,4 +10,6 @@ Lock::Lock(int trigger, unsigned long backresponse): trigger(backresponse){
 void Lock:: Open(){
     digitalWrite(trigger, HIGH);
     delay(backresponse);
+    digitalWrite(trigger, LOW);
+
 }
