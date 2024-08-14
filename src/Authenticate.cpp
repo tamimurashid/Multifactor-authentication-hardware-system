@@ -4,23 +4,33 @@
   In this file only class and functionality are written here but the real activity and operation runs 
   in main.cpp file 
 */
+/* Start header declaration */
 #include "Authenticate.h"
 #include <Arduino.h>
 #include "Indicator.h"
 #include "ServoControl.h"
 #include "Lock.h"
+/* End of header declaration */
+
+/* Start of global constant variables pin for board and sensor connecion*/
 const int trigger = 12;
 const int servoPin = 16;
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
+/* End of varibale declaration */
+
+/* Beggining of other variable for properties such as status and delay */
 const unsigned long warningDelay = 1000;  
 const unsigned long successDelay = 1000; 
 const unsigned long  backresponse = 5000; // this is the delay for returning back the lock after being triggered 
+/* End of other varible declaration */
 
+/* Class declaration or creation */
 Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 ServoControl servoControl(servoPin);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
+/*End of class declaration */
 
 uint8_t Authenticate::getFingerprintID() {
     uint8_t p = finger.getImage();
