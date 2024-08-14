@@ -80,6 +80,7 @@ uint8_t Authenticate::getFingerprintID() {
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
         indicator.success();
         //servoControl.rotateOnSuccess();
+        lock.Open();
         return finger.fingerID;
       
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
