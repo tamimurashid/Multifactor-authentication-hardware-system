@@ -74,14 +74,15 @@ uint8_t Authenticate::getFingerprintID() {
     }
 
     p = finger.fingerSearch();
+    // this is the succsses when finger print match with the database 
     if (p == FINGERPRINT_OK) {
         Serial.println("Found a print match!");
         Serial.print("Found ID #"); Serial.print(finger.fingerID);
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
-        indicator.success();
+        indicator.success();// this will light the green led to show succsses 
         //servoControl.rotateOnSuccess();
-        lock.Open();
-        return finger.fingerID;
+        lock.Open();// this will trigger the solenoid lock to open and remain open for five minutes 
+        return finger.fingerID;// return the finger print id after being recorginised 
       
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
