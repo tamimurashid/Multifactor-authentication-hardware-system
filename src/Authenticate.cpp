@@ -1,3 +1,9 @@
+/*
+  This is the authentication cpp file 
+  The main purpose of this file it runs for authentication process 
+  In this file only class and functionality are written here but the real activity and operation runs 
+  in main.cpp file 
+*/
 #include "Authenticate.h"
 #include <Arduino.h>
 #include "Indicator.h"
