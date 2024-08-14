@@ -9,6 +9,7 @@
 #include <Arduino.h>
 #include "Indicator.h"
 #include "Lock.h"
+#include "AlertSound.h"
 /* End of header declaration */
 
 /* Start of global constant variables pin for board and sensor connecion*/
@@ -21,15 +22,18 @@
 const int trigger = 16; 
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
+const int buzzle_pin = 15;
 /* End of varibale declaration */
 
 /* Beggining of other variable for properties such as status and delay */
 const unsigned long warningDelay = 1000;  
 const unsigned long successDelay = 1000; 
 const unsigned long  backresponse = 5000; // this is the delay for returning back the lock after being triggered 
+const unsigned long SoundDelay = 100;
 /* End of other varible declaration */
 
 /* Class declaration or creation */
+AlertSound alertsound(int buzzle_pin, unsigned long SoundDelay);
 Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
