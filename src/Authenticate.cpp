@@ -19,10 +19,10 @@
    So in assigning pins makes sure to find the ESP8266 image to compare labeled pins and actual 
    function pins in the board 
 */
-const int trigger = 16; 
+const int trigger = 2; 
 const int ledPin1 = 5; 
 const int ledPin2 = 4; 
-const int buzzle_pin = 15;
+const int buzzle_pin = 0;
 /* End of varibale declaration */
 
 /* Beggining of other variable for properties such as status and delay */
