@@ -42,6 +42,7 @@ AlertSound alertsound(buzzle_pin, SoundDelay);
 Lock lock(trigger, backresponse);
 Indicator indicator(ledPin1, ledPin2,  warningDelay, successDelay);
 Authenticate::Authenticate(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor) {}
+LCD_Display lcd(0x27, 16, 2);
 /*End of class declaration */
 
 uint8_t Authenticate::getFingerprintID() {
@@ -56,6 +57,7 @@ uint8_t Authenticate::getFingerprintID() {
             return p;
         case FINGERPRINT_PACKETRECIEVEERR:
             Serial.println("Communication error");
+            lcd.printMessage("Communication error", 0);
             indicator.error();
             delay(1000);
             return p;
@@ -66,6 +68,7 @@ uint8_t Authenticate::getFingerprintID() {
             return p;
         default:
             Serial.println("Unknown error");
+            lcd.printMessage("Unknown error", 1);
             indicator.error();
             delay(1000);
             return p;
@@ -79,6 +82,8 @@ uint8_t Authenticate::getFingerprintID() {
             break;
         case FINGERPRINT_IMAGEMESS:
             Serial.println("Image too messy");
+            lcd.printMessage("Error ...", 0);
+            lcd.printMessage("Put finger print correct", 1);
             delay(1000);
             return p;
         case FINGERPRINT_PACKETRECIEVEERR:
@@ -107,6 +112,8 @@ uint8_t Authenticate::getFingerprintID() {
         Serial.println("Found a print match!");
         Serial.print("Found ID #"); Serial.print(finger.fingerID);
         Serial.print(" with confidence of "); Serial.println(finger.confidence);
+        lcd.printMessage("Thankyou .. ", 0);
+        lcd.printMessage("FInger match  with id: " + finger.fingerID, 1);
         indicator.success();// this will light the green led to show succsses 
         //servoControl.rotateOnSuccess();
         alertsound.Success_alert();

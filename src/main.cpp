@@ -45,10 +45,13 @@ void setup() {
     while (!Serial);
     delay(100);
     Serial.println("\n\nFingerprint System");
+    lcd.printMessage("Hi there ", 0);
+    lcd.printMessage("Welcome to fingerprint system", 1);
 
     finger.begin(57600);
     if (finger.verifyPassword()) {
         Serial.println("Found fingerprint sensor!");
+        lcd.printMessage("Starting enrollment...", 0);
     } else {
         Serial.println("Did not find fingerprint sensor :(");
         while (1) { delay(1); }
@@ -57,8 +60,8 @@ void setup() {
 
 void loop() {
     Serial.println("Waiting for command...");
+     lcd.printMessage("Waiting for command...", 0);
     String command = readCommand();
-    lcd.printMessage("Waiting for command...", 0);
     //lcd.printMessage("LCD Tutorial", 1);
 
     if (command == "ENROLL" || command == "enroll" || command == "2") {
