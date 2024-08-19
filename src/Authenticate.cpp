@@ -7,11 +7,16 @@
 /* Start header declaration */
 #include "Authenticate.h"
 #include <Arduino.h>
+#include <Wire.h>
 #include "Indicator.h"
 #include "Lock.h"
 #include "AlertSound.h"
+#include "LCD_Display.h"
 /* End of header declaration */
 
+#define SDA_PIN D2
+#define SCL_PIN D1
+ 
 /* Start of global constant variables pin for board and sensor connecion*/
 /* 
    A short notice to follow, The board used here is Esp8266
