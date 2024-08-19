@@ -58,6 +58,8 @@ void setup() {
 void loop() {
     Serial.println("Waiting for command...");
     String command = readCommand();
+    lcd.printMessage("Waiting for command...", 0);
+    //lcd.printMessage("LCD Tutorial", 1);
 
     if (command == "ENROLL" || command == "enroll" || command == "2") {
         Serial.println("Starting enrollment...");
