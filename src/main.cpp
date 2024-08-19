@@ -63,9 +63,11 @@ void loop() {
 
     if (command == "ENROLL" || command == "enroll" || command == "2") {
         Serial.println("Starting enrollment...");
+        lcd.printMessage("Starting enrollment...", 0);
         enroll.enrollFingerprint();
     } else if (command == "AUTH" || command == "A" || command == "a" || command == "1") {
         Serial.println("Entering continuous authentication mode.");
+        lcd.printMessage("Entering continuous authentication mode.", 0);
         while (true) {
             auth.authenticateFingerprint();
 
@@ -74,6 +76,7 @@ void loop() {
                 String stopCommand = readCommand();
                 if (stopCommand == "S" || stopCommand == "s" || stopCommand == "0") {
                     Serial.println("Exiting authentication mode.");
+                    lcd.printMessage("Exiting authentication mode..", 0);
                     break;
                 }
             }
@@ -81,12 +84,15 @@ void loop() {
         }
     } else if (command == "DELETE" || command == "delete" || command == "4") {
         Serial.println("Starting deletion...");
+        lcd.printMessage("Starting deletion...", 1);
         del.deleteFingerprint();
     } else if (command == "EXIT") {
         Serial.println("Exiting...");
+         lcd.printMessage("Exiting..., Thankyou welcome again.", 0);
         while (1);
     } else {
         Serial.println("Invalid command, please try again.");
+        lcd.printMessage("Invalid command, please try again.", 1);
     }
 
     delay(1000); 
