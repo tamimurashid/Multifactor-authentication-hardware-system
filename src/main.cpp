@@ -6,10 +6,16 @@
 
 /* This below are header files for the project */
 #include <Adafruit_Fingerprint.h>
+#include <Wire.h>
 #include "Authenticate.h"
 #include "Enroll.h"
 #include "Delete.h"
 #include "Indicator.h"
+#include "LCD_Display.h"
+
+#define SDA_PIN D2
+#define SCL_PIN D1
+
 
 #if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
 #include <SoftwareSerial.h>
@@ -24,6 +30,7 @@ Adafruit_Fingerprint finger(&mySerial);
 Authenticate auth(finger);
 Enroll enroll(finger);
 Delete del(finger);
+LCD_Display lcd(0x27, 16, 2);
 
 
 
@@ -33,6 +40,8 @@ String readCommand();
 void setup() {
     // pinMode(warning_led, OUTPUT);
     Serial.begin(9600);
+    Wire.begin(SDA_PIN, SCL_PIN);// begin i2c commmunication 
+    lcd.begin();// begin the lcd display 
     while (!Serial);
     delay(100);
     Serial.println("\n\nFingerprint System");

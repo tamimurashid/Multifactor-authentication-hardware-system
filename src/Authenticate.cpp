@@ -10,8 +10,6 @@
 #include "Indicator.h"
 #include "Lock.h"
 #include "AlertSound.h"
-#include <Wire.h>
-#include "LCD_Display.h"
 /* End of header declaration */
 
 /* Start of global constant variables pin for board and sensor connecion*/
