@@ -126,6 +126,7 @@ uint8_t Authenticate::getFingerprintID() {
         return p;
     } else if (p == FINGERPRINT_NOTFOUND) {
         Serial.println("Did not find a match");
+        lcd.printMessage("Did not find a match", 0);
          indicator.error();
         return p;
     } else {
