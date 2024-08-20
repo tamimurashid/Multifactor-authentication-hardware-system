@@ -36,7 +36,6 @@ LCD_Display lcd(0x27, 16, 2);
 
 // Function prototype
 String readCommand();
-
 void setup() {
     // pinMode(warning_led, OUTPUT);
     Serial.begin(9600);
