@@ -13,7 +13,10 @@ public:
     
     // Print a message on a specific row
     void printMessage(const char* message, uint8_t row);
-    
+
+    // Scroll a message from right to left
+    void scrollMessage(const char* message, uint8_t row);
+
 private:
    LiquidCrystal_I2C lcd;
 };

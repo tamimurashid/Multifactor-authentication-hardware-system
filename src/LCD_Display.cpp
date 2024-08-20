@@ -15,3 +15,15 @@ void LCD_Display::printMessage(const char* message, uint8_t row) {
     lcd.setCursor(0, row);
     lcd.print(message);
 }
+// Scroll a message from right to left
+void LCD_Display::scrollMessage(const char* message, uint8_t row) {
+    int len = strlen(message);
+    for (int i = 0; i < len + 16; i++) {
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Hi there");
+        lcd.setCursor(16 - i, row); // Adjust position to scroll from right to left
+        lcd.print(message);
+        delay(100); // Adjust scroll speed
+    }
+}
