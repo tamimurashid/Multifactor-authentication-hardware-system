@@ -44,8 +44,16 @@ void setup() {
     while (!Serial);
     delay(100);
     Serial.println("\n\nFingerprint System");
-    lcd.printMessage("Hi there ", 0);
-    lcd.printMessage("Welcome to fingerprint system", 1);
+    
+    lcd.printMessage("Hi there", 0);
+    delay(1000); // Pause for a moment
+
+    // Scroll "Welcome to" from right to left
+    lcd.scrollMessage("Welcome to ", 1);
+
+    // Scroll "Fingerprint System" from right to left
+    lcd.scrollMessage("fingerprint system", 1);
+    
 
     finger.begin(57600);
     if (finger.verifyPassword()) {
