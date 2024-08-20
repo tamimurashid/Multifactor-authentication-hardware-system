@@ -15,7 +15,7 @@ public:
     void printMessage(const char* message, uint8_t row);
     
 private:
-    LiquidCrystal_I2C lcd;
+   LiquidCrystal_I2C lcd;
 };
 
 #endif // LCD_DISPLAY_H
