@@ -44,21 +44,21 @@ void setup() {
     while (!Serial);
     delay(100);
     Serial.println("\n\nFingerprint System");
-    
+
     lcd.printMessage("Hi there", 0);
     delay(1000); // Pause for a moment
 
     // Scroll "Welcome to" from right to left
-    lcd.scrollMessage("Welcome to ", 1);
+    // lcd.scrollMessage("Welcome to ", "Error",  1);
 
     // Scroll "Fingerprint System" from right to left
-    lcd.scrollMessage("fingerprint system", 1);
+    lcd.scrollMessage("Welcome to Authentication system", "talion's system",  1);
+    
     
 
     finger.begin(57600);
     if (finger.verifyPassword()) {
         Serial.println("Found fingerprint sensor!");
-        lcd.printMessage("Starting enrollment...", 0);
     } else {
         Serial.println("Did not find fingerprint sensor :(");
         while (1) { delay(1); }
@@ -67,17 +67,22 @@ void setup() {
 
 void loop() {
     Serial.println("Waiting for command...");
-     lcd.printMessage("Waiting for command...", 0);
+     lcd.clearMessage();
+     lcd.printMessage("Waiting for", 0);
+     lcd.printMessage("command...", 1);
     String command = readCommand();
-    //lcd.printMessage("LCD Tutorial", 1);
 
     if (command == "ENROLL" || command == "enroll" || command == "2") {
         Serial.println("Starting enrollment...");
-        lcd.printMessage("Starting enrollment...", 0);
+        lcd.clearMessage();
+        // lcd.printMessage("Starting enrollment...", 0);
+        lcd.scrollMessage("Starting enrollment...", "Registration..",  1);
         enroll.enrollFingerprint();
     } else if (command == "AUTH" || command == "A" || command == "a" || command == "1") {
         Serial.println("Entering continuous authentication mode.");
-        lcd.printMessage("Entering continuous authentication mode.", 0);
+        lcd.clearMessage();
+        lcd.printMessage("Authentication..", 0);
+        lcd.printMessage("mode On progress", 1);
         while (true) {
             auth.authenticateFingerprint();
 
@@ -86,7 +91,8 @@ void loop() {
                 String stopCommand = readCommand();
                 if (stopCommand == "S" || stopCommand == "s" || stopCommand == "0") {
                     Serial.println("Exiting authentication mode.");
-                    lcd.printMessage("Exiting authentication mode..", 0);
+                    lcd.clearMessage();
+                    lcd.scrollMessage("Exiting authentication mode..", "Termination..",  1);
                     break;
                 }
             }
@@ -94,15 +100,21 @@ void loop() {
         }
     } else if (command == "DELETE" || command == "delete" || command == "4") {
         Serial.println("Starting deletion...");
-        lcd.printMessage("Starting deletion...", 1);
+        lcd.clearMessage();
+        lcd.scrollMessage("Starting deletion...", "Deleting",  1);
         del.deleteFingerprint();
-    } else if (command == "EXIT") {
+        // keypad functionality for delete 
+        // rfid functionality for delete 
+    } else if (command == "EXIT"  || command == "0") {
         Serial.println("Exiting...");
-         lcd.printMessage("Exiting..., Thankyou welcome again.", 0);
+         lcd.clearMessage();
+        //  lcd.printMessage("Exiting...", 0);
+         lcd.scrollMessage("Thankyou welcome again.", "Goodbye",  1);
         while (1);
     } else {
         Serial.println("Invalid command, please try again.");
-        lcd.printMessage("Invalid command, please try again.", 1);
+        lcd.clearMessage();
+        lcd.scrollMessage("Invalid command, please try again.", "Error",  1);
     }
 
     delay(1000); 

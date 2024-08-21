@@ -15,7 +15,10 @@ public:
     void printMessage(const char* message, uint8_t row);
 
     // Scroll a message from right to left
-    void scrollMessage(const char* message, uint8_t row);
+    void scrollMessage(const char* message, const char* message1, uint8_t row);
+    // where message is title for scroll message 
+
+    void clearMessage();
 
 private:
    LiquidCrystal_I2C lcd;
