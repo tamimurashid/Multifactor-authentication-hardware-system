@@ -8,14 +8,6 @@ SDA/SS: Connect to GPIO4 (SC).
 IRQ: Can be left unconnected or connected to a free GPIO.
 
 
-RFID Module Pin	NodeMCU Pin	Description
-SDA/SS	GPIO4 (D2)	Slave Select (SS)
-SCK	GPIO14 (D5)	Serial Clock (SCK)
-MOSI	GPIO13 (D7)	Master Out Slave In (MOSI)
-MISO	GPIO12 (D6)	Master In Slave Out (MISO)
-RST	GPIO2 (D4)	Reset (RST)
-GND	GND	Ground
-3.3V	3.3V	Power Supply (3.3V)
 
 SS_PIN (SDA/SS): Connected to GPIO4 (D2)
 RST_PIN: Connect this to a free GPIO; in the example, it's set to GPIO0 (D3), but you can change it.
