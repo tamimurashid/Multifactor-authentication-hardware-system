@@ -1,8 +1,6 @@
 #include "Enroll.h"
 #include <Arduino.h>
 
-#define MAX_ID 127 // Define the maximum ID value
-
 Enroll::Enroll(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSensor), id(0) {
     // Initialize the used IDs array
     for (int i = 0; i < MAX_ID; i++) {
@@ -10,26 +8,31 @@ Enroll::Enroll(Adafruit_Fingerprint &fingerprintSensor) : finger(fingerprintSens
     }
 }
 
-uint8_t Enroll::generateUniqueID() {
-    uint8_t newID;
-    bool idFound = false;
-
-    // Try to generate a unique ID
-    while (!idFound) {
-        newID = random(1, MAX_ID + 1);
-        if (!usedIDs[newID - 1]) {
-            usedIDs[newID - 1] = true; // Mark this ID as used
-            idFound = true;
+uint8_t Enroll::getUserInputID() {
+    Serial.println("Please enter a unique ID to assign (1-127):");
+    while (true) {
+        if (Serial.available() > 0) {
+            int enteredID = Serial.parseInt();
+            if (enteredID >= 1 && enteredID <= MAX_ID) {
+                if (!usedIDs[enteredID - 1]) {
+                    usedIDs[enteredID - 1] = true; // Mark this ID as used
+                    Serial.print("You entered: ");
+                    Serial.println(enteredID);
+                    return enteredID;
+                } else {
+                    Serial.println("This ID is already used. Please enter a different ID.");
+                }
+            } else {
+                Serial.println("Invalid ID. Please enter a number between 1 and 127.");
+            }
         }
     }
-
-    return newID;
 }
 
 uint8_t Enroll::enrollFingerprint() {
     Serial.println("Ready to enroll a fingerprint!");
-    id = generateUniqueID();
-    Serial.print("Generated unique ID: ");
+    id = getUserInputID();  // Get user input for ID
+    Serial.print("Assigned unique ID: ");
     Serial.println(id);
 
     while (!getFingerprintEnroll());
